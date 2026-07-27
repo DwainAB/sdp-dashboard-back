@@ -19,7 +19,7 @@ CREATE TABLE metrics (
   value DECIMAL(15,2) NOT NULL DEFAULT 0,
   unit VARCHAR(50) DEFAULT '',
   type ENUM('number','percentage','currency') DEFAULT 'number',
-  change DECIMAL(10,2) DEFAULT 0,
+  `change` DECIMAL(10,2) DEFAULT 0,
   FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
 );
 
@@ -47,7 +47,7 @@ INSERT INTO projects (name, slug, description, color, status) VALUES
   ('Analytics', 'analytics', 'Moteur de reporting et analytics', '#ef4444', 'active'),
   ('Admin Portal', 'admin-portal', 'Portail d''administration interne', '#8b5cf6', 'maintenance');
 
-INSERT INTO metrics (project_id, name, value, unit, type, change) VALUES
+INSERT INTO metrics (project_id, name, value, unit, type, `change`) VALUES
   (1, 'Utilisateurs actifs', 12543, '', 'number', 12.5),
   (1, 'Transactions/jour', 8432, '', 'number', -3.2),
   (1, 'Taux de succès', 98.7, '%', 'percentage', 0.5),

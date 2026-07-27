@@ -28,7 +28,7 @@ router.get('/projects/:slug', async (req: Request, res: Response) => {
     }
 
     const [metrics] = await pool.query(
-      'SELECT id, name, value, unit, type, change FROM metrics WHERE project_id = ?',
+      'SELECT id, name, value, unit, type, `change` FROM metrics WHERE project_id = ?',
       [project.id]
     )
 

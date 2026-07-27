@@ -67,36 +67,4 @@ router.post('/auth/login', async (req: Request, res: Response) => {
   res.json(user)
 })
 
-router.get('/users', async (_req: Request, res: Response) => {
-  try {
-    const [rows] = await pool.query(
-      `SELECT u.id, u.email, u.first_name, u.last_name, u.is_active, u.last_login, u.created_at,
-              r.id as role_id, r.name as role_name
-       FROM users u
-       JOIN roles r ON r.id = u.role_id
-       ORDER BY u.last_name, u.first_name`
-    )
-    res.json(rows)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs' })
-  }
-})
-
-router.get('/roles', async (_req: Request, res: Response) => {
-  try {
-    const [rows] = await pool.query(
-      `SELECT r.*, 
-        (SELECT JSON_ARRAYAGG(JSON_OBJECT('resource', rp.resource, 'action', rp.action))
-         FROM role_permissions rp WHERE rp.role_id = r.id) as permissions
-       FROM roles r
-       ORDER BY r.name`
-    )
-    res.json(rows)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: 'Erreur lors de la récupération des rôles' })
-  }
-})
-
 export default router
